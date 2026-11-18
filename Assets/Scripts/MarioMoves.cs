@@ -8,97 +8,111 @@ public class MarioMovController
     private readonly AniManager _animations;
     private Rigidbody2D _rigidBody;
     
+    // Horizontal movement
+    private float _userInputMovX;
     private float _walkVelocity = 4.0f;
     private float _acceleration = 14.0f;
     private float _deceleration = 22.0f;
-    private float _userMovementX;
     
-    private float _jumpForce = 6.5f;
-    private float _jumpVelocityX;
-    
-    private bool _jumping = false;
+    // Vertical movement
     private bool _grounded = true;
+    private float _jumpForce = 6.5f;
     private int _floorLayerId = LayerMask.NameToLayer("Floor");
     
+    
+    // --------------------------------------------
+    // Initialization
     public MarioMovController(PlayerInput input, AniManager animations, Rigidbody2D rigidbody)
     {
         this._input = input;
         this._animations = animations;
         this._rigidBody = rigidbody;
     }
-
+    
+    // --------------------------------------------
+    // Update loops
     public void OnUpdate()
     {
-        this._userMovementX = this._input.actions["move"].ReadValue<Vector2>().x;
-        if (this._userMovementX != 0.0f)
+        this.ReadUserInput();
+        this.FlipMarioX();
+        
+        if (this._grounded)
         {
-            if (this._grounded)
+            if (this._userInputMovX == 0.0f)
             {
-                if (this._userMovementX < 0.0f) // left
+                if (this._rigidBody.linearVelocityX == 0.0f)
                 {
-                    this._animations.Sprite.flipX = false;
+                    this._animations.Animate("stand");
                 }
-                else // right
+                else
                 {
-                    this._animations.Sprite.flipX = true;
+                    this._animations.Animate("brake");
                 }
-            }
-                
-            if(this._grounded) this._animations.Animate("walk");
-        }
-        else
-        {
-            if (this._rigidBody.linearVelocityX != 0.0f)
-            {
-                if(this._grounded) this._animations.Animate("brake");
             }
             else
             {
-                if(this._grounded) this._animations.Animate("stand");    
+                this._animations.Animate("walk");
             }
         }
-
-        if (this._rigidBody.linearVelocityY != 0.0f)
+        else
         {
-            if(!this._grounded) this._animations.Animate("jump");
+            this._animations.Animate("jump");
         }
     }
-
+    
     public void OnFixedUpdate()
     {
-        if(!this._grounded)
-        {
-            if (this._jumping)
-            {
-                this._rigidBody.linearVelocityX = this._jumpVelocityX;    
-            }
-            return;
-        }
-        
-        float targetVelocity = this._userMovementX * this._walkVelocity;
-        float rate = this._userMovementX == 0.0f  ? this._deceleration  : this._acceleration;
+        float targetVelocity = this._userInputMovX * this._walkVelocity;
+        float rate = this._userInputMovX == 0.0f  ? this._deceleration  : this._acceleration;
         
         this._rigidBody.linearVelocityX = Mathf.MoveTowards(
-            this._rigidBody.linearVelocityX,
-            targetVelocity,
+            this._rigidBody.linearVelocityX, targetVelocity,
             rate * Time.fixedDeltaTime
         );
-        
-        // Constant walking speed
-        //this._rigidBody.linearVelocityX = targetVelocity;
     }
-
+    
+    // --------------------------------------------
+    // PlayerInput actions
     public void Jump()
     {
         if (this._grounded)
         {
-            this._jumping = true;
             this._grounded = false;
-            this._jumpVelocityX = this._rigidBody.linearVelocityX;
             this._rigidBody.linearVelocityY = this._jumpForce;
         }
     }
+    
+    // --------------------------------------------
+    // Physics: Collider triggers
+    public void OnTriggerEnter(int layerId)
+    {
+        this._grounded = true;
+    }
+    
+    public void OnTriggerExit(int layerId)
+    {
+        this._grounded = false;
+    }
+    
+    // --------------------------------------------
+    // misc
+    private void ReadUserInput()
+    {
+        this._userInputMovX = this._input.actions["move"].ReadValue<Vector2>().x;
+    }
 
+    private void FlipMarioX()
+    {
+        if (this._userInputMovX < 0.0f) // left
+        {
+            this._animations.Sprite.flipX = false;
+        }
+        if (this._userInputMovX > 0.0f) // left
+        {
+            this._animations.Sprite.flipX = true;
+        }
+    }
+    
     private bool LayerIsFloor(int layerId)
     {
         if (layerId == this._floorLayerId)
@@ -106,22 +120,5 @@ public class MarioMovController
             return true;
         }
         return false;
-    }
-    
-    public void OnTriggerEnter(int layerId)
-    {
-        if (this.LayerIsFloor(layerId))
-        {
-            this._grounded = true;
-            this._jumping = false;
-        }
-    }
-
-    public void OnTriggerExit(int layerId)
-    {
-        if (this.LayerIsFloor(layerId))
-        {
-            this._grounded = false;
-        }
     }
 }
