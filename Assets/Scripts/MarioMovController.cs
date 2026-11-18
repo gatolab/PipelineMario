@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class MarioMovController
 {
+    private GameObject _mario;
     private readonly PlayerInput _input;
     private readonly AniManager _animations;
     private Rigidbody2D _rigidBody;
@@ -13,20 +14,29 @@ public class MarioMovController
     private float _walkVelocity = 4.0f;
     private float _acceleration = 14.0f;
     private float _deceleration = 22.0f;
+    private int _wallLayerId = LayerMask.NameToLayer("Wall");
+
+    private Transform _wallLeft;
+    private Transform _wallRight;
     
     // Vertical movement
     private bool _grounded = true;
-    private float _jumpForce = 6.5f;
+    private float _jumpForce = 7.0f;
     private int _floorLayerId = LayerMask.NameToLayer("Floor");
     
     
     // --------------------------------------------
     // Initialization
-    public MarioMovController(PlayerInput input, AniManager animations, Rigidbody2D rigidbody)
+    public MarioMovController(GameObject mario)
     {
-        this._input = input;
-        this._animations = animations;
-        this._rigidBody = rigidbody;
+        this._mario = mario;
+        this._input = mario.GetComponent<PlayerInput>();
+        this._animations = new AniManager(mario.GetSpriteRenderer("sprite"), "stand");
+        this._rigidBody = mario.GetRigidBody();
+        
+        GameObject level = GameObject.FindGameObjectWithTag("Level");
+        this._wallLeft = level.transform.Find("wall_left");
+        this._wallRight = level.transform.Find("wall_right");
     }
     
     // --------------------------------------------
@@ -84,14 +94,37 @@ public class MarioMovController
     
     // --------------------------------------------
     // Physics: Collider triggers
-    public void OnTriggerEnter(int layerId)
+    public void OnTriggerEnter(GameObject gameObject)
     {
-        this._grounded = true;
+        int layerId = gameObject.layer;
+        
+        if (layerId == this._floorLayerId)
+        {
+            this._grounded = true;    
+        } else
+        {
+            float wallMargin = 0.85f; 
+            
+            if (gameObject.transform == this._wallLeft)
+            {
+                Vector2 newPos = this._mario.transform.position;
+                newPos.x = this._wallRight.position.x - wallMargin;
+                this._mario.transform.position = newPos;
+            } else if (gameObject.transform == this._wallRight)
+            {
+                Vector2 newPos = this._mario.transform.position;
+                newPos.x = this._wallLeft.position.x + wallMargin;
+                this._mario.transform.position = newPos;
+            }
+        }
     }
     
     public void OnTriggerExit(int layerId)
     {
-        this._grounded = false;
+        if (layerId == this._floorLayerId)
+        {
+            this._grounded = false;    
+        }
     }
     
     // --------------------------------------------

@@ -3,9 +3,9 @@ using UnityEditorInternal;using UnityEngine;
 public static class ProjectUtils
 {
     // -------------------------------------------------------------------------------------
-    // MonoBehaviour (main script) extensions
+    // GameObject (main script) extensions
     
-    public static SpriteRenderer GetSpriteRenderer(this MonoBehaviour obj, string name)
+    public static SpriteRenderer GetSpriteRenderer(this GameObject obj, string name)
     {
         // name: Can be used with paths, example: "container/mySprite"    
         
@@ -21,7 +21,7 @@ public static class ProjectUtils
         }
     }
     
-    public static Rigidbody2D GetRigidBody(this MonoBehaviour obj)
+    public static Rigidbody2D GetRigidBody(this GameObject obj)
     {
         return obj.GetComponent<Rigidbody2D>();
     }

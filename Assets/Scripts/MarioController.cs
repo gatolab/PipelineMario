@@ -4,14 +4,12 @@ using UnityEngine.InputSystem;
 
 public class MarioController: MonoBehaviour
 {
-    private AniManager _animations;
     private MarioMovController _moves;
     
     private void Start()
     {
-        this.GetSpriteRenderer("dot").enabled = false;
-        this._animations = new AniManager(this.GetSpriteRenderer("sprite"), "stand");
-        this._moves = new MarioMovController(this.GetComponent<PlayerInput>(), this._animations, this.GetRigidBody());
+        this.gameObject.GetSpriteRenderer("dot").enabled = false;
+        this._moves = new MarioMovController(this.gameObject);
     }
 
     private void Update()
@@ -31,7 +29,7 @@ public class MarioController: MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        this._moves.OnTriggerEnter(other.gameObject.layer);
+        this._moves.OnTriggerEnter(other.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D other)
