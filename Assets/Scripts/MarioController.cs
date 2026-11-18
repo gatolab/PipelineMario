@@ -10,6 +10,7 @@ public class MarioController: MonoBehaviour
     {
         this.gameObject.GetSpriteRenderer("dot").enabled = false;
         this._moves = new MarioMovController(this.gameObject);
+        this._moves.FlipMarioX();
     }
 
     private void Update()

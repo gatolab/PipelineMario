@@ -101,7 +101,7 @@ public class MarioMovController
         if (layerId == this._floorLayerId)
         {
             this._grounded = true;    
-        } else
+        } else if(layerId == this._wallLayerId)
         {
             float wallMargin = 0.85f; 
             
@@ -134,13 +134,13 @@ public class MarioMovController
         this._userInputMovX = this._input.actions["move"].ReadValue<Vector2>().x;
     }
 
-    private void FlipMarioX()
+    public void FlipMarioX()
     {
         if (this._userInputMovX < 0.0f) // left
         {
             this._animations.Sprite.flipX = false;
         }
-        if (this._userInputMovX > 0.0f) // left
+        if (this._userInputMovX > 0.0f) // right
         {
             this._animations.Sprite.flipX = true;
         }
