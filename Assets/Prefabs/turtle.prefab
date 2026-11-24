@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7530542191122780310}
   - component: {fileID: 5022017059848304572}
   - component: {fileID: 3311220456488872980}
-  m_Layer: 0
+  - component: {fileID: 7981395655474506609}
+  m_Layer: 10
   m_Name: turtle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1700790cb654ced815031a6209cf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurtleController
+  direction: 2
+--- !u!114 &7981395655474506609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505166512031624157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64a3c71b7262472ea991e315c960c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndlessHWalk
+  wallMargin: 0.95
 --- !u!1 &3005593287585390099
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7549151768289319978}
   - component: {fileID: 6472623013939351225}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +241,7 @@ GameObject:
   - component: {fileID: 3179407586774690921}
   - component: {fileID: 3133664467847674293}
   - component: {fileID: 7334553167779430351}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

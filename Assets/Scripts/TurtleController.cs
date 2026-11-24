@@ -6,26 +6,24 @@ public class TurtleController : MonoBehaviour
     private AniManager _animations;
     private Rigidbody2D _rigidBody;
     
-    private bool _grounded = true;
+    public int direction = 2;
     private float _walkVelocity = 3.0f;
-    private Transform _wallLeft;
-    private Transform _wallRight;
-    
-    private int _direction;
+    private bool _grounded = false;
+    private int _floorLayerId;
+    private int _floorForEnemiesLayerId;
     
     // --------------------------------------------
     // Initialization
-    void Start()
+    void Awake()
     {
-        this._direction = 2;
-        
         this.gameObject.GetSpriteRenderer("dot").enabled = false;
+        
         this._animations = new AniManager(this.gameObject.GetSpriteRenderer("sprite"), "stand");
         this._rigidBody = this.gameObject.GetRigidBody();
+        this._floorLayerId = LayerMask.NameToLayer("Floor");
+        this._floorForEnemiesLayerId = LayerMask.NameToLayer("FloorForEnemies");
         
-        GameObject level = GameObject.FindGameObjectWithTag("Level");
-        this._wallLeft = level.transform.Find("wall_left");
-        this._wallRight = level.transform.Find("wall_right");
+        print(this._rigidBody);
     }
 
     // --------------------------------------------
@@ -53,7 +51,7 @@ public class TurtleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (this._direction == 2)
+        if (this.direction == 2)
         {
             this._rigidBody.linearVelocityX = this._walkVelocity;
         }
@@ -62,37 +60,22 @@ public class TurtleController : MonoBehaviour
             this._rigidBody.linearVelocityX = -this._walkVelocity;
         }
     }
-
+    
     // --------------------------------------------
     // Physics: Collider triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
         int layerId = other.gameObject.layer;
-        if (layerId == LayerMask.NameToLayer("Floor"))
+        if (layerId == this._floorLayerId || layerId == this._floorForEnemiesLayerId)
         {
             this._grounded = true;
-        } else if(layerId == LayerMask.NameToLayer("Wall"))
-        {
-            float wallMargin = 0.9f; 
-            
-            if (other.gameObject.transform == this._wallLeft)
-            {
-                Vector2 newPos = this.gameObject.transform.position;
-                newPos.x = this._wallRight.position.x - wallMargin;
-                this.gameObject.transform.position = newPos;
-            } else if (other.gameObject.transform == this._wallRight)
-            {
-                Vector2 newPos = this.gameObject.transform.position;
-                newPos.x = this._wallLeft.position.x + wallMargin;
-                this.gameObject.transform.position = newPos;
-            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         int layerId = other.gameObject.layer;
-        if (layerId == LayerMask.NameToLayer("Floor"))
+        if (layerId == this._floorLayerId || layerId == this._floorForEnemiesLayerId)
         {
             this._grounded = false;
         }
@@ -103,7 +86,7 @@ public class TurtleController : MonoBehaviour
     
     public void FlipTurtleX()
     {
-        if (this._direction == 1) // left
+        if (this.direction == 1) // left
         {
             this._animations.Sprite.flipX = false;
         }

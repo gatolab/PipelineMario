@@ -83,7 +83,7 @@ public class MarioMovController
     
     // --------------------------------------------
     // PlayerInput actions
-    public void Jump()
+    public void Jump2()
     {
         if (this._grounded)
         {

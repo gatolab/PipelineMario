@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4101486745540916362}
   - component: {fileID: 3501415013280972240}
   - component: {fileID: 202632039181378061}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7520731147192379399}
   - component: {fileID: 2039695810415463467}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,11 +301,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 757524178213912263}
-  - component: {fileID: 1534005312279475372}
   - component: {fileID: 466323359080817215}
-  - component: {fileID: 3936902484810379288}
+  - component: {fileID: 1534005312279475372}
   - component: {fileID: 2293572427639208642}
-  m_Layer: 0
+  - component: {fileID: 3936902484810379288}
+  - component: {fileID: 2801044371464485386}
+  - component: {fileID: 4124488161878868965}
+  m_Layer: 8
   m_Name: MainCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,33 +331,6 @@ Transform:
   - {fileID: 7520731147192379399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1534005312279475372
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6819948483594270793}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &466323359080817215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,18 +361,33 @@ MonoBehaviour:
   m_DefaultActionMap: gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3936902484810379288
-MonoBehaviour:
+--- !u!50 &1534005312279475372
+Rigidbody2D:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6819948483594270793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24f747dbb279e4cb187df6e00cce666e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarioController
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &2293572427639208642
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -444,3 +434,42 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.3003497, y: 0.06992221}
   m_EdgeRadius: 0
+--- !u!114 &3936902484810379288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819948483594270793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f747dbb279e4cb187df6e00cce666e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarioController
+  input: {fileID: 0}
+  rigidBody: {fileID: 0}
+--- !u!114 &2801044371464485386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819948483594270793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9867a67c9a8a473498d7f91691abfcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarioMovement
+--- !u!114 &4124488161878868965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819948483594270793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64a3c71b7262472ea991e315c960c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndlessHWalk
+  wallMargin: 0.85

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2a00a2f1abe28417fb16735c90d896db
+guid: 791943d5f27f14e5d980348d2d5fd4c0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6825632438319863801
-    second: NES - Super Mario Bros. 3 - Enemies & Bosses - Enemies_0
+      213: 3980254271671988934
+    second: NES - Super Mario Bros. - Miscellaneous - Tileset 02_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 28
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NES - Super Mario Bros. 3 - Enemies & Bosses - Enemies_0
+      name: NES - Super Mario Bros. - Miscellaneous - Tileset 02_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 735
-        height: 1731
+        x: 112
+        y: 88
+        width: 32
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 708af8a067b7641a0800000000000000
-      internalID: -6825632438319863801
+      spriteID: 6c27dbafb24bc3730800000000000000
+      internalID: 3980254271671988934
       vertices: []
       indices: 
       edges: []
@@ -127,7 +127,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f0c60684fa42b47299c83ec9938d6847
     internalID: 0
     vertices: []
     indices: 
@@ -137,7 +137,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NES - Super Mario Bros. 3 - Enemies & Bosses - Enemies_0: -6825632438319863801
+      NES - Super Mario Bros. - Miscellaneous - Tileset 02_0: 3980254271671988934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
