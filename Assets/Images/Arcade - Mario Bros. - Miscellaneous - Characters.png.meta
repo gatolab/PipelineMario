@@ -431,6 +431,72 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Arcade - Mario Bros. - Miscellaneous - Characters_0
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 1135
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43e63cc4002a3491b9f610d3cb29277d
+      internalID: -85895893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arcade - Mario Bros. - Miscellaneous - Characters_1
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 1135
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6261719c2a6f345f683f9b8c21872b74
+      internalID: 1489279872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arcade - Mario Bros. - Miscellaneous - Characters_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1099
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5de07edfa524417a0e0b3585a6fb30
+      internalID: -1071225165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -446,6 +512,8 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Arcade - Mario Bros. - Miscellaneous - Characters_0: -85895893
+      Arcade - Mario Bros. - Miscellaneous - Characters_1: 1489279872
+      Arcade - Mario Bros. - Miscellaneous - Characters_2: -1071225165
       Arcade - Mario Bros. - Miscellaneous - Characters_6: 2000891482
       Mario Jump: -713881936
       mario brake 01: -1887969983

@@ -11,6 +11,9 @@ public class TurtleController : MonoBehaviour
     private bool _grounded = false;
     private int _floorLayerId;
     private int _floorForEnemiesLayerId;
+    private int _heroAttack;
+    
+    private bool _upsideDown = false;
     
     // --------------------------------------------
     // Initialization
@@ -22,8 +25,7 @@ public class TurtleController : MonoBehaviour
         this._rigidBody = this.gameObject.GetRigidBody();
         this._floorLayerId = LayerMask.NameToLayer("Floor");
         this._floorForEnemiesLayerId = LayerMask.NameToLayer("FloorForEnemies");
-        
-        print(this._rigidBody);
+        this._heroAttack = LayerMask.NameToLayer("HeroAttack");
     }
 
     // --------------------------------------------
@@ -31,6 +33,7 @@ public class TurtleController : MonoBehaviour
     private void Update()
     {
         this.FlipTurtleX();
+        if (this._upsideDown) return;
         
         if (this._grounded)
         {
@@ -51,6 +54,8 @@ public class TurtleController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (this._upsideDown) return;
+        
         if (this.direction == 2)
         {
             this._rigidBody.linearVelocityX = this._walkVelocity;
@@ -70,6 +75,24 @@ public class TurtleController : MonoBehaviour
         {
             this._grounded = true;
         }
+        else if(layerId == this._heroAttack && this._grounded) // Headbutt!
+        {
+            if (this._upsideDown)
+            {
+                this._upsideDown = false;
+                this._rigidBody.linearVelocity = new Vector2(0.0f, 4.0f);
+                this._animations.Animate("stand");
+                CancelInvoke("UpsideDownBack");
+            }
+            else
+            {
+                this._upsideDown = true;
+                this._rigidBody.linearVelocity = new Vector2(0.0f, 4.0f);
+                this._animations.Animate("upsideDown");
+            
+                Invoke("UpsideDownBack", 2.0f);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -83,6 +106,14 @@ public class TurtleController : MonoBehaviour
     
     // --------------------------------------------
     // // misc
+    
+    private void UpsideDownBack()
+    {
+        this._upsideDown = false;
+        this._animations.Sprite.color = Color.Lerp(Color.white, Color.red, 0.5f);
+        this._animations.Animate("walk");
+        this._walkVelocity = 4.5f;
+    }
     
     public void FlipTurtleX()
     {

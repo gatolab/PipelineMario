@@ -18,7 +18,10 @@ public class LevelController : MonoBehaviour
         this._spawnRight = this.transform.Find("spawn_right").transform;
         
         //Invoke("SpawnEnemy", 1.0f);
-        InvokeRepeating("SpawnEnemy", 1.0f, 10.0f);
+
+        float initialDelay = 0.0f;
+        float delayBetweenEnemies = 5.0f;
+        InvokeRepeating("SpawnEnemy", initialDelay, delayBetweenEnemies);
     }
 
     void SpawnEnemy()

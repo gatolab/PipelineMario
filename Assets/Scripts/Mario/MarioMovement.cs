@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class MarioMovement : MonoBehaviour
 {
+    public GameObject sparksRef;
+    public GameObject tmpHitRef;
+    
     private SpriteRenderer _sprite;
     
     // Horizontal movement
@@ -79,6 +82,22 @@ public class MarioMovement : MonoBehaviour
     }
     
     // --------------------------------------------
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        float A = GameData.mario.gameObject.transform.position.y;
+        float B = other.gameObject.transform.position.y;
+
+        float diff = B - A;
+        if (diff > 1.0f) // Headbutt!
+        {
+            Vector3 pos = GameData.mario.gameObject.transform.position;
+            pos.y += 1.2f;
+            
+            Instantiate(this.sparksRef, pos, Quaternion.identity);
+            Instantiate(this.tmpHitRef, pos, Quaternion.identity);
+        }
+    }
+
     // Physics: Collider triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -90,6 +109,7 @@ public class MarioMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+
         if (other.gameObject.layer == this._floorLayerId)
         {
             this._grounded = false;    

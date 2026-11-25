@@ -19,7 +19,7 @@ public class EndlessHWalk : MonoBehaviour
     {
         if (other.gameObject.layer == this._wallLayerId)
         {
-            Vector2 newPos = GameData.mario.transform.position;
+            Vector2 newPos = this.gameObject.transform.position; 
             
             if (other.gameObject == GameData.level.leftWall)
             {

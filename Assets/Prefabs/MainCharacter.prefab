@@ -446,8 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f747dbb279e4cb187df6e00cce666e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarioController
-  input: {fileID: 0}
-  rigidBody: {fileID: 0}
 --- !u!114 &2801044371464485386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9867a67c9a8a473498d7f91691abfcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarioMovement
+  sparksRef: {fileID: 956563305698673483, guid: b10037c83c8b74480946bbda00ed29c6, type: 3}
+  tmpHitRef: {fileID: 6977817825039518224, guid: dfc98d6df2bb04d948a56b8df77bd1a6, type: 3}
 --- !u!114 &4124488161878868965
 MonoBehaviour:
   m_ObjectHideFlags: 0
