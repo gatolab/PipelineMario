@@ -18,6 +18,7 @@ public class TurtleController : MonoBehaviour
     private int _heroAttackLayerId;
     private int _pipeAreasLayerId;
     private int _enemiesLayerId;
+    private int _marioLayerId;
     
     private bool _upsideDown = false;
     
@@ -34,6 +35,7 @@ public class TurtleController : MonoBehaviour
         this._heroAttackLayerId = LayerMask.NameToLayer("HeroAttack");
         this._pipeAreasLayerId = LayerMask.NameToLayer("PipeAreas");
         this._enemiesLayerId = LayerMask.NameToLayer("Enemies");
+        this._marioLayerId = LayerMask.NameToLayer("Mario");
     }
 
     // --------------------------------------------
@@ -75,7 +77,7 @@ public class TurtleController : MonoBehaviour
     }
     
     // --------------------------------------------
-    // Physics: Collider collides
+    // Collisions
     private void OnCollisionEnter2D(Collision2D other)
     {
         int layerId = other.gameObject.layer;
@@ -83,13 +85,33 @@ public class TurtleController : MonoBehaviour
         {
             if (!this._upsideDown)
             {
-                this.reverseDirection();    
+                this.ReverseDirection();    
+            }
+        } else if (layerId == this._marioLayerId)
+        {
+            if (this._upsideDown)
+            {
+                this._rigidBody.gravityScale = 3.0f;
+                this._rigidBody.linearVelocityY = 10.0f;
+                
+                this.GetComponent<BoxCollider2D>().enabled = false;
+                SpriteRenderer sprite = this.gameObject.GetSpriteRenderer("sprite");
+                sprite.GetComponent<BoxCollider2D>().enabled = false;
+                sprite.GetComponent<CapsuleCollider2D>().enabled = false;
+                CancelInvoke(); // Cancel all invokes
+                
+                Invoke("DestroyMe", 2.0f);
+                GameData.level.OnEnemyDestroyed();
+            }
+            else
+            {
+                GameData.mario.Die();
             }
         }
     }
 
     // --------------------------------------------
-    // Physics: Collider triggers
+    // Colliders trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
         int layerId = other.gameObject.layer;
@@ -104,8 +126,7 @@ public class TurtleController : MonoBehaviour
                 this._upsideDown = false;
                 this._rigidBody.linearVelocity = new Vector2(0.0f, 4.0f);
                 this._animations.Animate("stand");
-                CancelInvoke("GetNervous");
-                CancelInvoke("UpsideDownBack");
+                CancelInvoke(); // Cancel all invokes
             }
             else // go upside down!
             {
@@ -119,7 +140,7 @@ public class TurtleController : MonoBehaviour
         {
             string tag = other.gameObject.tag;
 
-            this.reverseDirection();
+            this.ReverseDirection();
             this.gameObject.transform.position = GameData.level.GetSpawnPosition(tag).position;
         }
     }
@@ -171,9 +192,14 @@ public class TurtleController : MonoBehaviour
         }
     }
 
-    private void reverseDirection()
+    private void ReverseDirection()
     {
         if (direction == 1) direction = 2;
         else direction = 1;
+    }
+
+    private void DestroyMe()
+    {
+        Destroy(this.gameObject);
     }
 }

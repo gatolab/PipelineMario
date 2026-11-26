@@ -11,7 +11,8 @@ public class LevelController : MonoBehaviour
     private Transform _spawnRight;
 
     private int _totalEnemies = 4;
-    private int _enemiesCount = 0;
+    private int _enemiesCreated = 0;
+    private int _enemiesDestroyed = 0;
     
     // --------------------------------------------
     // Initialization
@@ -37,8 +38,8 @@ public class LevelController : MonoBehaviour
         GameObject newEnemy = Instantiate(this.enemyRef, pos, Quaternion.identity);
         newEnemy.GetComponent<TurtleController>().direction = (side == 1) ? 2 : 1;
 
-        this._enemiesCount += 1;
-        if (this._enemiesCount >= this._totalEnemies)
+        this._enemiesCreated += 1;
+        if (this._enemiesCreated >= this._totalEnemies)
         {
             CancelInvoke("SpawnEnemy");
         }
@@ -53,6 +54,15 @@ public class LevelController : MonoBehaviour
         else
         {
             return this._spawnRight;
+        }
+    }
+
+    public void OnEnemyDestroyed()
+    {
+        this._enemiesDestroyed += 1;
+        if (this._enemiesDestroyed == this._totalEnemies)
+        {
+            print("LEVEL COMPLETED!");
         }
     }
 }

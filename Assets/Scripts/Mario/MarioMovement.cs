@@ -32,6 +32,8 @@ public class MarioMovement : MonoBehaviour
     // Update loops
     private void Update()
     {
+        if (GameData.mario.isDead) return;
+        
         this._userInputMovX = GameUtils.ReadUserInputX();
         this.FlipMarioX();
         
@@ -61,8 +63,15 @@ public class MarioMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameData.mario.isDead) return;
+        
         float targetVelocity = this._userInputMovX * this._walkVelocity;
         float rate = this._userInputMovX == 0.0f  ? this._deceleration  : this._acceleration;
+
+        if (this._userInputMovX != 0.0f)
+        {
+            GameData.mario.rigidBody.gravityScale = 1.0f;
+        }
         
         GameData.mario.rigidBody.linearVelocityX = Mathf.MoveTowards(
             GameData.mario.rigidBody.linearVelocityX, targetVelocity,
@@ -74,6 +83,9 @@ public class MarioMovement : MonoBehaviour
     // PlayerInput actions
     public void OnJump()
     {
+        if (GameData.mario.isDead) return;
+        
+        GameData.mario.rigidBody.gravityScale = 1.0f;
         if (this._grounded)
         {
             this._grounded = false;
@@ -82,13 +94,14 @@ public class MarioMovement : MonoBehaviour
     }
     
     // --------------------------------------------
+    // Collisions
     private void OnCollisionEnter2D(Collision2D other)
     {
         float A = GameData.mario.gameObject.transform.position.y;
         float B = other.gameObject.transform.position.y;
 
         float diff = B - A;
-        if (diff > 1.0f) // Headbutt!
+        if (diff > 1.0f && GameData.mario.rigidBody.linearVelocityY >= 0.0f) // Headbutt!
         {
             Vector3 pos = GameData.mario.gameObject.transform.position;
             pos.y += 1.2f;
@@ -98,7 +111,7 @@ public class MarioMovement : MonoBehaviour
         }
     }
 
-    // Physics: Collider triggers
+    // Collider triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == this._floorLayerId)

@@ -11,7 +11,7 @@ public class TmpHitController : MonoBehaviour
 
         SpriteRenderer sprite = this.gameObject.GetSpriteRenderer("colorArea");
         Color mColor = sprite.color;
-        mColor.a = 1.0f;
+        mColor.a = 0.0f;
         sprite.color = mColor;
     }
 
