@@ -15,8 +15,9 @@ public class TurtleController : MonoBehaviour
     private bool _grounded = false;
     private int _floorLayerId;
     private int _floorForEnemiesLayerId;
-    private int _heroAttack;
-    private int _pipeAreas;
+    private int _heroAttackLayerId;
+    private int _pipeAreasLayerId;
+    private int _enemiesLayerId;
     
     private bool _upsideDown = false;
     
@@ -30,8 +31,9 @@ public class TurtleController : MonoBehaviour
         this._rigidBody = this.gameObject.GetRigidBody();
         this._floorLayerId = LayerMask.NameToLayer("Floor");
         this._floorForEnemiesLayerId = LayerMask.NameToLayer("FloorForEnemies");
-        this._heroAttack = LayerMask.NameToLayer("HeroAttack");
-        this._pipeAreas = LayerMask.NameToLayer("PipeAreas");
+        this._heroAttackLayerId = LayerMask.NameToLayer("HeroAttack");
+        this._pipeAreasLayerId = LayerMask.NameToLayer("PipeAreas");
+        this._enemiesLayerId = LayerMask.NameToLayer("Enemies");
     }
 
     // --------------------------------------------
@@ -73,6 +75,20 @@ public class TurtleController : MonoBehaviour
     }
     
     // --------------------------------------------
+    // Physics: Collider collides
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        int layerId = other.gameObject.layer;
+        if (layerId == this._enemiesLayerId)
+        {
+            if (!this._upsideDown)
+            {
+                this.reverseDirection();    
+            }
+        }
+    }
+
+    // --------------------------------------------
     // Physics: Collider triggers
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -81,7 +97,7 @@ public class TurtleController : MonoBehaviour
         {
             this._grounded = true;
         }
-        else if(layerId == this._heroAttack) // Headbutt!
+        else if(layerId == this._heroAttackLayerId) // Headbutt!
         {
             if (this._upsideDown)
             {
@@ -99,13 +115,11 @@ public class TurtleController : MonoBehaviour
             
                 Invoke("GetNervous", this._getNervousTime);
             }
-        } else if (layerId == this._pipeAreas)
+        } else if (layerId == this._pipeAreasLayerId)
         {
             string tag = other.gameObject.tag;
 
-            if (this.direction == 1) this.direction = 2;
-            else this.direction = 1;
-
+            this.reverseDirection();
             this.gameObject.transform.position = GameData.level.GetSpawnPosition(tag).position;
         }
     }
@@ -155,5 +169,11 @@ public class TurtleController : MonoBehaviour
         {
             this._animations.Sprite.flipX = true;
         }
+    }
+
+    private void reverseDirection()
+    {
+        if (direction == 1) direction = 2;
+        else direction = 1;
     }
 }
