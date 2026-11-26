@@ -9,6 +9,9 @@ public class LevelController : MonoBehaviour
 
     private Transform _spawnLeft;
     private Transform _spawnRight;
+
+    private int _totalEnemies = 4;
+    private int _enemiesCount = 0;
     
     // --------------------------------------------
     // Initialization
@@ -19,8 +22,6 @@ public class LevelController : MonoBehaviour
         this._spawnLeft = this.transform.Find("spawn_left").transform;
         this._spawnRight = this.transform.Find("spawn_right").transform;
         
-        //Invoke("SpawnEnemy", 1.0f);
-
         float initialDelay = 0.0f;
         float delayBetweenEnemies = 5.0f;
         InvokeRepeating("SpawnEnemy", initialDelay, delayBetweenEnemies);
@@ -35,5 +36,23 @@ public class LevelController : MonoBehaviour
         
         GameObject newEnemy = Instantiate(this.enemyRef, pos, Quaternion.identity);
         newEnemy.GetComponent<TurtleController>().direction = (side == 1) ? 2 : 1;
+
+        this._enemiesCount += 1;
+        if (this._enemiesCount >= this._totalEnemies)
+        {
+            CancelInvoke("SpawnEnemy");
+        }
+    }
+    
+    public Transform GetSpawnPosition(string tag)
+    {
+        if (tag == "left")
+        {
+            return this._spawnLeft;
+        }
+        else
+        {
+            return this._spawnRight;
+        }
     }
 }

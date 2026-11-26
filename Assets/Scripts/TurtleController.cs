@@ -16,6 +16,7 @@ public class TurtleController : MonoBehaviour
     private int _floorLayerId;
     private int _floorForEnemiesLayerId;
     private int _heroAttack;
+    private int _pipeAreas;
     
     private bool _upsideDown = false;
     
@@ -30,6 +31,7 @@ public class TurtleController : MonoBehaviour
         this._floorLayerId = LayerMask.NameToLayer("Floor");
         this._floorForEnemiesLayerId = LayerMask.NameToLayer("FloorForEnemies");
         this._heroAttack = LayerMask.NameToLayer("HeroAttack");
+        this._pipeAreas = LayerMask.NameToLayer("PipeAreas");
     }
 
     // --------------------------------------------
@@ -52,7 +54,6 @@ public class TurtleController : MonoBehaviour
         }
         else
         {
-            print("raro");
             this._animations.Animate("stand");
         }
     }
@@ -98,6 +99,14 @@ public class TurtleController : MonoBehaviour
             
                 Invoke("GetNervous", this._getNervousTime);
             }
+        } else if (layerId == this._pipeAreas)
+        {
+            string tag = other.gameObject.tag;
+
+            if (this.direction == 1) this.direction = 2;
+            else this.direction = 1;
+
+            this.gameObject.transform.position = GameData.level.GetSpawnPosition(tag).position;
         }
     }
 
@@ -131,8 +140,6 @@ public class TurtleController : MonoBehaviour
     
     private void UpsideDownBack()
     {
-        print("back!");
-        
         this._upsideDown = false;
         this._rigidBody.linearVelocityY = 2.0f;
         this._walkVelocity = this._runVelocity;

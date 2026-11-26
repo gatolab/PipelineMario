@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2535819738274306837}
   - component: {fileID: 8031982314418236499}
   m_Layer: 11
-  m_Name: Square
+  m_Name: colorArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 2423589516652851415}
   - component: {fileID: 6780716850515316320}
   m_Layer: 11
-  m_Name: dot
+  m_Name: center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
