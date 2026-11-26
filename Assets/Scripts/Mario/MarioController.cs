@@ -12,7 +12,7 @@ public class MarioController: MonoBehaviour
     // Initialization
     private void Start()
     {
-        GameUtils.HideSpriteRendererIn(this.transform, "dot");
+        GameUtils.HideSpriteRendererIn(this.transform, "center");
         GameUtils.GetSpriteRendererIn(this.transform, "sprite").flipX = true;
         
         this.input = this.GetComponent<PlayerInput>();

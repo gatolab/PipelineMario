@@ -6,8 +6,12 @@ public class TurtleController : MonoBehaviour
     private AniManager _animations;
     private Rigidbody2D _rigidBody;
     
+    private float _walkVelocity = 1.5f;
+    private float _runVelocity = 3.0f;
+    private float _getNervousTime = 2.5f;
+    private float _upsideDownTime = 1.0f;
+    
     public int direction = 2;
-    private float _walkVelocity = 3.0f;
     private bool _grounded = false;
     private int _floorLayerId;
     private int _floorForEnemiesLayerId;
@@ -19,7 +23,7 @@ public class TurtleController : MonoBehaviour
     // Initialization
     void Awake()
     {
-        this.gameObject.GetSpriteRenderer("dot").enabled = false;
+        this.gameObject.GetSpriteRenderer("center").enabled = false;
         
         this._animations = new AniManager(this.gameObject.GetSpriteRenderer("sprite"), "stand");
         this._rigidBody = this.gameObject.GetRigidBody();
@@ -48,6 +52,7 @@ public class TurtleController : MonoBehaviour
         }
         else
         {
+            print("raro");
             this._animations.Animate("stand");
         }
     }
@@ -75,23 +80,33 @@ public class TurtleController : MonoBehaviour
         {
             this._grounded = true;
         }
-        else if(layerId == this._heroAttack && this._grounded) // Headbutt!
+        else if(layerId == this._heroAttack) // Headbutt!
         {
             if (this._upsideDown)
             {
                 this._upsideDown = false;
                 this._rigidBody.linearVelocity = new Vector2(0.0f, 4.0f);
                 this._animations.Animate("stand");
+                CancelInvoke("GetNervous");
                 CancelInvoke("UpsideDownBack");
             }
-            else
+            else // go upside down!
             {
                 this._upsideDown = true;
                 this._rigidBody.linearVelocity = new Vector2(0.0f, 4.0f);
                 this._animations.Animate("upsideDown");
             
-                Invoke("UpsideDownBack", 2.0f);
+                Invoke("GetNervous", this._getNervousTime);
             }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        int layerId = other.gameObject.layer;
+        if (layerId == this._floorLayerId)
+        {
+            this._grounded = true;
         }
     }
 
@@ -106,13 +121,21 @@ public class TurtleController : MonoBehaviour
     
     // --------------------------------------------
     // // misc
+
+    private void GetNervous()
+    {
+        this._animations.Animate("nervous");
+        this._animations.Sprite.color = Color.Lerp(Color.white, Color.red, 0.35f);
+        Invoke("UpsideDownBack", this._upsideDownTime);
+    }
     
     private void UpsideDownBack()
     {
+        print("back!");
+        
         this._upsideDown = false;
-        this._animations.Sprite.color = Color.Lerp(Color.white, Color.red, 0.5f);
-        this._animations.Animate("walk");
-        this._walkVelocity = 4.5f;
+        this._rigidBody.linearVelocityY = 2.0f;
+        this._walkVelocity = this._runVelocity;
     }
     
     public void FlipTurtleX()

@@ -14,6 +14,8 @@ public class LevelController : MonoBehaviour
     // Initialization
     private void Awake()
     {
+        GameUtils.HideSpriteRendererIn(this.transform, "center");
+        
         this._spawnLeft = this.transform.Find("spawn_left").transform;
         this._spawnRight = this.transform.Find("spawn_right").transform;
         
